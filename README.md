@@ -1,11 +1,10 @@
 # Release-tracking repository for nlohmann/json
 
-This repository is based on: [astoeckel/json](https://github.com/astoeckel/json)
+This repository is based on: [astoeckel/json](https://github.com/astoeckel/json).
 The goal is to provide a lightweight repository tracking every releases of
-[nlohmann/json](https://github.com/nlohmann/json).
-This repository is compatible with cmake [FetchContent](https://cmake.org/cmake/help/v3.11/module/FetchContent.html).
+[nlohmann/json](https://github.com/nlohmann/json), compatible with cmake [FetchContent](https://cmake.org/cmake/help/v3.11/module/FetchContent.html).
 
-You can depends on nlohmann/json using:
+You can depends on it using:
 
 **Example**:
 ~~~cmake
@@ -26,7 +25,7 @@ target_link_libraries(foo PRIVATE nlohmann_json::nlohmann_json)
 
 You can replace always replace the URL by the official repository:
 https://github.com/nlohmann/json
-The only difference is the download size. It will several orders of magnitude
+The only difference is the download size. It would be several orders of magnitude
 larger.
 
 This repository is fully autonomous. It updates itself every week using github
