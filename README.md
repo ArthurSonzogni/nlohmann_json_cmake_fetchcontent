@@ -13,7 +13,7 @@ include(FetchContent)
 
 FetchContent_Declare(json
   GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohman_json
-  GIT_TAG v3.0.0)
+  GIT_TAG v3.0.1)
 
 FetchContent_GetProperties(json)
 if(NOT json_POPULATED)
