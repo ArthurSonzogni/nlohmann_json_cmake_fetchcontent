@@ -53,6 +53,12 @@ for tag, url, body in release_url_map[::-1]:
     subprocess.call(['git', 'add', './include/nlohmann/json.hpp'])
     if has_json_fwd:
       subprocess.call(['git', 'add', './include/nlohmann/json_fwd.hpp'])
+
+    # Update the README.md:
+    subprocess.call([ 'sed', '-i', '-e', 's/GIT_TAG .*)/GIT_TAG '+ tag + ')/g', './README.md'])
+    subprocess.call(['git', 'add', './README.md'])
+
+    # Commit:
     subprocess.call(['git', 'commit', '-m', 'Upstream release ' + tag])
     subprocess.call(['git', 'tag', '-a', tag, '-m', body])
 
