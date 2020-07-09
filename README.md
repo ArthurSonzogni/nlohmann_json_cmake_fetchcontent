@@ -11,7 +11,7 @@ You can depends on it using:
 include(FetchContent)
 
 FetchContent_Declare(json
-  GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohman_json
+  GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
   GIT_TAG v3.8.0)
 
 FetchContent_GetProperties(json)
