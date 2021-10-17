@@ -12,7 +12,7 @@ include(FetchContent)
 
 FetchContent_Declare(json
   GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
-  GIT_TAG v3.10.3)
+  GIT_TAG v3.10.4)
 
 FetchContent_GetProperties(json)
 if(NOT json_POPULATED)
