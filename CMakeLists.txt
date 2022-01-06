@@ -32,6 +32,7 @@ set(NLOHMANN_JSON_CMAKE_PROJECT_TARGETS_FILE "${NLOHMANN_JSON_CMAKE_CONFIG_DIR}/
 ## install header files, generate and install cmake config files for find_package()
 ##
 include(CMakePackageConfigHelpers)
+
 # use a custom package version config file instead of
 # write_basic_package_version_file to ensure that it's architecture-independent
 # https://github.com/nlohmann/json/issues/1697
@@ -50,7 +51,6 @@ configure_file(
 install(
   DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/nlohmann
   DESTINATION ${NLOHMANN_JSON_INCLUDE_INSTALL_DIR}
-  FILES_MATCHING PATTERN "*.hpp"
 )
 
 install(
