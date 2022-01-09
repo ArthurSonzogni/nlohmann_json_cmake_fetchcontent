@@ -27,44 +27,58 @@ print("Releases already contained in this repository are " + str(tags))
 
 # Go over the release_url_map in reverse order; if a release is not yet a Git
 # tag, download the file, commit and add a tag
-did_update = False
 for tag, url, body in release_url_map[::-1]:
-  if not tag in tags:
-    print("Downloading release " + tag + " from " + url)
-    os.makedirs('./include', mode=0o777, exist_ok=True)
-    os.makedirs('./include/nlohmann', mode=0o777, exist_ok=True)
-    data = urllib.request.urlopen(url).read();
-    with open('./include/nlohmann/json.hpp', 'wb') as f:
-      f.write(data)
+  if tag in tags:
+    continue
 
-    # Try to download the json_fwd.hpp header -- only exists since release
-    # v3.1.0
-    has_json_fwd = False
-    try:
-      json_fwd_url = 'https://github.com/nlohmann/json/raw/{}/include/nlohmann/json_fwd.hpp'.format(tag);
-      print("Trying to download " + json_fwd_url)
-      data = urllib.request.urlopen(json_fwd_url).read();
-      with open('./include/nlohmann/json_fwd.hpp', 'wb') as f:
+  print("Downloading release " + tag)
+  if tag >= "v3.10.5":
+      os.system("rm -rf ./tmp")
+      os.system("git clone https://github.com/nlohmann/json ./tmp --depth 1 --branch {}".format(tag));
+      os.system("cp -rf ./tmp/single_include .")
+      os.system("cp -rf ./tmp/include/nlohmann/json_fwd.hpp ./single_include/nlohmann/")
+      os.system("cp -rf ./tmp/cmake .")
+      os.system("cp -rf ./tmp/CMakeLists.txt .")
+      os.system("cp -rf ./tmp/meson.build .")
+      os.system("cp -rf ./tmp/LICENSE.MIT .")
+      os.system("rm -rf ./tmp")
+      ci_cmake = open("./cmake/ci.cmake")
+      ci_cmake.write("message(FATAL_ERROR \"The JSON_CI option is not available" \
+                     "when using the nlohmann_json_cmake_fetchcontent repository.\")")
+      ci_cmake.close()
+      test_cmake = open("./test/CMakeLists.txt")
+      test_cmake.write("message(FATAL_ERROR \"The JSON_CI option is not available" \
+                       "when using the nlohmann_json_cmake_fetchcontent repository.\")")
+      test_cmake.close()
+      os.system("git add .")
+  else:
+      os.makedirs('./include', mode=0o777, exist_ok=True)
+      os.makedirs('./include/nlohmann', mode=0o777, exist_ok=True)
+      data = urllib.request.urlopen(url).read();
+      with open('./include/nlohmann/json.hpp', 'wb') as f:
         f.write(data)
-      has_json_fwd = True
-    except:
-      pass
 
-    subprocess.call(['git', 'add', './include/nlohmann/json.hpp'])
-    if has_json_fwd:
-      subprocess.call(['git', 'add', './include/nlohmann/json_fwd.hpp'])
+      # Try to download the json_fwd.hpp header -- only exists since release
+      # v3.1.0
+      has_json_fwd = False
+      try:
+        json_fwd_url = 'https://github.com/nlohmann/json/raw/{}/include/nlohmann/json_fwd.hpp'.format(tag);
+        print("Trying to download " + json_fwd_url)
+        data = urllib.request.urlopen(json_fwd_url).read();
+        with open('./include/nlohmann/json_fwd.hpp', 'wb') as f:
+          f.write(data)
+        has_json_fwd = True
+      except:
+        pass
 
-    # Update the README.md:
-    subprocess.call([ 'sed', '-i', '-e', 's/GIT_TAG .*)/GIT_TAG '+ tag + ')/g', './README.md'])
-    subprocess.call(['git', 'add', './README.md'])
+      subprocess.call(['git', 'add', './include/nlohmann/json.hpp'])
+      if has_json_fwd:
+        subprocess.call(['git', 'add', './include/nlohmann/json_fwd.hpp'])
 
-    # Commit:
-    subprocess.call(['git', 'commit', '-m', 'Upstream release ' + tag])
-    subprocess.call(['git', 'tag', '-a', tag, '-m', body])
+  # Update the README.md:
+  subprocess.call([ 'sed', '-i', '-e', 's/GIT_TAG .*)/GIT_TAG '+ tag + ')/g', './README.md'])
+  subprocess.call(['git', 'add', './README.md'])
 
-    did_update = True
-
-# Push the updated Git repository
-if did_update:
-  subprocess.call(['git', 'push', '--tags'])
-  subprocess.call(['git', 'push'])
+  # Commit:
+  subprocess.call(['git', 'commit', '-m', 'Upstream release ' + tag])
+  subprocess.call(['git', 'tag', '-a', tag, '-m', body])
