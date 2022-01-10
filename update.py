@@ -48,10 +48,10 @@ for tag, url, body in release_url_map[::-1]:
       os.makedirs('./test', mode=0o777, exist_ok=True)
       with open("./cmake/ci.cmake", "w") as f:
         f .write("message(FATAL_ERROR \"The JSON_CI option is not available" \
-                 "when using the nlohmann_json_cmake_fetchcontent repository.\")")
+                 " when using the nlohmann_json_cmake_fetchcontent repository.\")")
       with open("./test/CMakeLists.txt", "w") as f:
         f.write("message(FATAL_ERROR \"The JSON_BuildTests option is not available" \
-                "when using the nlohmann_json_cmake_fetchcontent repository.\")")
+                " when using the nlohmann_json_cmake_fetchcontent repository.\")")
       os.system("git add .")
   else:
       os.makedirs('./include', mode=0o777, exist_ok=True)
