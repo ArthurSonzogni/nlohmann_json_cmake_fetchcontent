@@ -1,0 +1,1 @@
+message(FATAL_ERROR "The JSON_CI option is not availablewhen using the nlohmann_json_cmake_fetchcontent repository.")
