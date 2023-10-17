@@ -41,6 +41,7 @@ for tag, url, body in release_url_map[::-1]:
       os.system("cp -rf ./tmp/cmake .")
       os.system("cp -rf ./tmp/CMakeLists.txt .")
       os.system("cp -rf ./tmp/meson.build .")
+      os.system("cp -rf ./tmp/nlohmann_json.natvis .")
       os.system("cp -rf ./tmp/LICENSE.MIT .")
       os.system("rm -rf ./tmp")
       os.makedirs('./cmake', mode=0o777, exist_ok=True)
