@@ -1,3 +1,13 @@
+This repository is not more useful. Indeed, since v3.11.3, you can use:
+```cmake
+include(FetchContent)
+
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz)
+FetchContent_MakeAvailable(json)
+
+target_link_libraries(foo PRIVATE nlohmann_json::nlohmann_json)
+```
+
 # Release-tracking repository for nlohmann/json
 
 Goal is to provide a lightweight and autonomous repository tracking every
@@ -23,8 +33,7 @@ include(FetchContent)
 
 FetchContent_Declare(json
   GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
-  GIT_PROGRESS TRUE
-  GIT_SHALLOW TRUE
+  GIT_PROGRESS TRUE  GIT_SHALLOW TRUE
   GIT_TAG v3.11.2)
 
 FetchContent_MakeAvailable(json)
